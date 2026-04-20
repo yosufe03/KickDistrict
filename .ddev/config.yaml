@@ -1,0 +1,21 @@
+name: kickdistrict
+type: php
+docroot: App
+php_version: "8.2"
+webserver_type: apache-fpm
+router_http_port: "80"
+router_https_port: "443"
+xdebug_enabled: false
+additional_hostnames: []
+additional_fqdns: []
+database:
+  type: mariadb
+  version: "10.11"
+web_environment:
+  - KD_DB_HOST=db
+  - KD_DB_USER=db
+  - KD_DB_PASS=db
+  - KD_DB_NAME=db
+hooks:
+  post-start:
+    - exec-host: bash "$DDEV_APPROOT/.ddev/scripts/import_db.sh"
