@@ -13,6 +13,7 @@
         <div class="navbar-nav ms-auto d-flex gap-2">
             <a class="nav-link" href="register.php">Registrieren</a>
             <a class="nav-link" href="vouchers.php">Gutscheine</a>
+            <a class="nav-link" href="cart.php">Warenkorb</a>
         </div>
     </div>
 </nav>

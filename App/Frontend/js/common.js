@@ -2,6 +2,11 @@ function byId(id) {
     return document.getElementById(id);
 }
 
+function formatPrice(value) {
+    const number = Number(value) || 0;
+    return number.toFixed(2) + ' EUR';
+}
+
 function setMessage(id, text, isError = false) {
     const el = byId(id);
     if (!el) {
@@ -41,4 +46,3 @@ async function initNav() {
 }
 
 document.addEventListener('DOMContentLoaded', initNav);
-

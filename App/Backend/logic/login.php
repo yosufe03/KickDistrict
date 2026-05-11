@@ -29,7 +29,7 @@ $stmt->close();
 
 if (!$user || !password_verify($password, $user['password'])) {
     $db->close();
-    send_json(['status' => 'error', 'message' => 'Ungueltige Anmeldedaten'], 401);
+    send_json(['status' => 'error', 'message' => 'Ungültige Anmeldedaten'], 401);
 }
 
 if ((int) $user['active'] !== 1) {
