@@ -14,6 +14,7 @@
             <a class="nav-link" href="register.php" data-auth="out">Registrieren</a>
             <a class="nav-link" href="login.php" data-auth="out">Login</a>
             <a class="nav-link hidden" href="profile.php" data-auth="in">Profil</a>
+            <a class="nav-link" href="cart.php">Warenkorb</a>
             <button id="logoutBtn" data-auth="in" class="btn btn-outline-danger btn-sm hidden" type="button">Logout</button>
         </div>
     </div>

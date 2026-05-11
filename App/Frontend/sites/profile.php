@@ -12,6 +12,7 @@
         <a class="navbar-brand" href="index.php">KickDistrict</a>
         <div class="navbar-nav ms-auto d-flex gap-2">
             <a class="nav-link" href="vouchers.php">Gutscheine</a>
+            <a class="nav-link" href="cart.php">Warenkorb</a>
             <button id="logoutBtn" class="btn btn-outline-danger btn-sm" type="button">Logout</button>
         </div>
     </div>

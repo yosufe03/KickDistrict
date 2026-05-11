@@ -29,3 +29,65 @@ VALUES
     ('SPRINT1BONUS', 15.00, '2026-12-31'),
     ('USED000', 0.00, '2026-12-31')
 ON DUPLICATE KEY UPDATE value = VALUES(value), expiry_date = VALUES(expiry_date);
+
+CREATE TABLE IF NOT EXISTS categories (
+    id INT NOT NULL AUTO_INCREMENT,
+    name VARCHAR(100) NOT NULL,
+    PRIMARY KEY (id),
+    UNIQUE KEY uq_categories_name (name)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+CREATE TABLE IF NOT EXISTS products (
+    id INT NOT NULL AUTO_INCREMENT,
+    name VARCHAR(200) NOT NULL,
+    image VARCHAR(255) DEFAULT NULL,
+    price DECIMAL(10,2) NOT NULL,
+    category_id INT DEFAULT NULL,
+    description TEXT DEFAULT NULL,
+    PRIMARY KEY (id),
+    KEY idx_products_category (category_id),
+    CONSTRAINT fk_products_category
+        FOREIGN KEY (category_id) REFERENCES categories (id)
+        ON DELETE SET NULL ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+CREATE TABLE IF NOT EXISTS cartitems (
+    id INT NOT NULL AUTO_INCREMENT,
+    user_id INT DEFAULT NULL,
+    session_id VARCHAR(128) DEFAULT NULL,
+    product_id INT NOT NULL,
+    quantity INT NOT NULL DEFAULT 1,
+    created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    PRIMARY KEY (id),
+    KEY idx_cartitems_user (user_id),
+    KEY idx_cartitems_session (session_id),
+    KEY idx_cartitems_product (product_id),
+    CONSTRAINT fk_cartitems_user
+        FOREIGN KEY (user_id) REFERENCES users (id)
+        ON DELETE CASCADE ON UPDATE CASCADE,
+    CONSTRAINT fk_cartitems_product
+        FOREIGN KEY (product_id) REFERENCES products (id)
+        ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+INSERT INTO categories (id, name)
+VALUES
+    (1, 'Trikots'),
+    (2, 'Schuhe'),
+    (3, 'Zubehör')
+ON DUPLICATE KEY UPDATE name = VALUES(name);
+
+INSERT INTO products (id, name, image, price, category_id, description)
+VALUES
+    (1, 'KickDistrict Home Jersey', '../res/img/product-placeholder.svg', 79.90, 1, 'Klassisches Heimtrikot mit atmungsaktivem Stoff.'),
+    (2, 'KickDistrict Away Jersey', '../res/img/product-placeholder.svg', 84.90, 1, 'Leichtes Auswärtstrikot für Training und Spieltag.'),
+    (3, 'Sprint Speed Cleats', '../res/img/product-placeholder.svg', 119.00, 2, 'Stabile Fußballschuhe mit gutem Grip.'),
+    (4, 'Control Pro Cleats', '../res/img/product-placeholder.svg', 139.00, 2, 'Fokus auf Ballgefühl und Präzision.'),
+    (5, 'Match Ball', '../res/img/product-placeholder.svg', 29.90, 3, 'Strapazierfähiger Ball für Training.'),
+    (6, 'Goalkeeper Gloves', '../res/img/product-placeholder.svg', 39.90, 3, 'Handschuhe mit sicherem Halt bei jedem Wetter.')
+ON DUPLICATE KEY UPDATE
+    name = VALUES(name),
+    image = VALUES(image),
+    price = VALUES(price),
+    category_id = VALUES(category_id),
+    description = VALUES(description);

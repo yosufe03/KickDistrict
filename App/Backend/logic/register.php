@@ -20,19 +20,19 @@ $password = (string) ($data['password'] ?? '');
 $passwordRepeat = (string) ($data['password_repeat'] ?? '');
 
 if ($firstName === '' || $lastName === '' || $email === '' || $username === '' || $password === '') {
-    send_json(['status' => 'error', 'message' => 'Bitte alle Pflichtfelder ausfuellen'], 422);
+    send_json(['status' => 'error', 'message' => 'Bitte alle Pflichtfelder ausfüllen'], 422);
 }
 
 if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-    send_json(['status' => 'error', 'message' => 'Ungueltiges E-Mail-Format'], 422);
+    send_json(['status' => 'error', 'message' => 'Ungültiges E-Mail-Format'], 422);
 }
 
 if ($password !== $passwordRepeat) {
-    send_json(['status' => 'error', 'message' => 'Passwoerter stimmen nicht ueberein'], 422);
+    send_json(['status' => 'error', 'message' => 'Passwörter stimmen nicht überein'], 422);
 }
 
 if (strlen($password) < 8 || !preg_match('/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).+$/', $password)) {
-    send_json(['status' => 'error', 'message' => 'Passwort muss min. 8 Zeichen inkl. Gross-/Kleinbuchstabe und Zahl enthalten'], 422);
+    send_json(['status' => 'error', 'message' => 'Passwort muss min. 8 Zeichen inkl. Groß-/Kleinbuchstabe und Zahl enthalten'], 422);
 }
 
 $db = get_db();

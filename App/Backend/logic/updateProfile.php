@@ -11,7 +11,7 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     send_json(['status' => 'error', 'message' => 'Methode nicht erlaubt'], 405);
 }
 
-// Unterstuetzt FormData (Frontend) und JSON (Tests/API-Client)
+// Unterstützt FormData (Frontend) und JSON (Tests/API-Client)
 $payload = !empty($_POST) ? $_POST : read_json_input();
 
 $salutation = clean_string($payload['salutation'] ?? '');
@@ -26,7 +26,7 @@ if ($firstName === '' || $lastName === '' || $email === '' || $currentPassword =
 }
 
 if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-    send_json(['status' => 'error', 'message' => 'Ungueltiges E-Mail-Format'], 422);
+    send_json(['status' => 'error', 'message' => 'Ungültiges E-Mail-Format'], 422);
 }
 
 $db = get_db();
@@ -55,7 +55,7 @@ if (!$ok) {
 if ($newPassword !== '') {
     if (strlen($newPassword) < 8 || !preg_match('/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).+$/', $newPassword)) {
         $db->close();
-        send_json(['status' => 'error', 'message' => 'Neues Passwort erfuellt die Regeln nicht'], 422);
+        send_json(['status' => 'error', 'message' => 'Neues Passwort erfüllt die Regeln nicht'], 422);
     }
 
     $newHash = password_hash($newPassword, PASSWORD_DEFAULT);
@@ -73,4 +73,3 @@ if ($newPassword !== '') {
 
 $db->close();
 send_json(['status' => 'success', 'message' => 'Profil aktualisiert']);
-

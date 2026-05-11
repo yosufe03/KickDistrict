@@ -1,5 +1,6 @@
 body {
     background: #f7f8fc;
+    padding-bottom: 2rem;
 }
 
 .navbar-brand {
@@ -22,3 +23,22 @@ body {
     box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.08);
 }
 
+.product-grid {
+    margin-bottom: 2rem;
+}
+
+.product-grid .card {
+    height: 100%;
+}
+
+.product-image {
+    height: 180px;
+    object-fit: cover;
+    background: #f1f3f6;
+}
+
+.qty-group {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+}
