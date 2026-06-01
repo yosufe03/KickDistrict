@@ -88,4 +88,3 @@ try {
     $db->close();
     send_json(['status' => 'error', 'message' => 'Bestellung konnte nicht gespeichert werden'], 500);
 }
-
