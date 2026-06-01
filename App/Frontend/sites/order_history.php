@@ -2,7 +2,7 @@
 <html lang="de">
 <head>
     <?php
-    $pageTitle = 'Warenkorb - KickDistrict';
+    $pageTitle = 'Bestellhistorie - KickDistrict';
     include __DIR__ . '/components/head.php';
     ?>
 </head>
@@ -22,32 +22,33 @@
 </nav>
 
 <main class="container mt-4">
-    <h1 class="h4 mb-3">Warenkorb</h1>
+    <h1 class="h4 mb-3">Bestellhistorie</h1>
 
-    <div class="table-wrap">
-        <table class="table align-middle">
-            <thead>
-            <tr>
-                <th>Produkt</th>
-                <th>Preis</th>
-                <th>Menge</th>
-                <th>Summe</th>
-                <th></th>
-            </tr>
-            </thead>
-            <tbody id="cartTableBody"></tbody>
-        </table>
-        <div class="d-flex justify-content-end align-items-center gap-3 mt-3">
-            <strong>Gesamt: <span id="cartTotal">0.00 EUR</span></strong>
-            <a href="checkout.php" class="btn btn-primary">Checkout</a>
-            <a href="order_history.php" class="btn btn-outline-secondary">Bestellhistorie</a>
+    <div class="card shadow-sm">
+        <div class="card-body">
+            <div class="table-wrap">
+                <table class="table align-middle">
+                    <thead>
+                    <tr>
+                        <th>Bestellung</th>
+                        <th>Datum</th>
+                        <th>Status</th>
+                        <th>Produkte</th>
+                        <th>Summe</th>
+                        <th></th>
+                    </tr>
+                    </thead>
+                    <tbody id="orderTableBody"></tbody>
+                </table>
+            </div>
+            <div id="orderMessage" class="hidden"></div>
         </div>
-        <div id="cartMessage" class="hidden"></div>
     </div>
 </main>
 
 <script src="../js/common.js"></script>
 <script src="../js/auth.js"></script>
-<script src="../js/cart.js"></script>
+<script src="../js/order_history.js"></script>
 </body>
 </html>
+

@@ -70,6 +70,37 @@ CREATE TABLE IF NOT EXISTS cartitems (
         ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+CREATE TABLE IF NOT EXISTS orders (
+    id INT NOT NULL AUTO_INCREMENT,
+    user_id INT NOT NULL,
+    order_date TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    total_amount DECIMAL(10,2) NOT NULL,
+    status ENUM('pending', 'confirmed', 'paid', 'cancelled') NOT NULL DEFAULT 'confirmed',
+    PRIMARY KEY (id),
+    KEY idx_orders_user (user_id),
+    CONSTRAINT fk_orders_user
+        FOREIGN KEY (user_id) REFERENCES users (id)
+        ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+CREATE TABLE IF NOT EXISTS order_items (
+    id INT NOT NULL AUTO_INCREMENT,
+    order_id INT NOT NULL,
+    product_id INT DEFAULT NULL,
+    product_name VARCHAR(200) NOT NULL,
+    quantity INT NOT NULL DEFAULT 1,
+    unit_price DECIMAL(10,2) NOT NULL,
+    PRIMARY KEY (id),
+    KEY idx_order_items_order (order_id),
+    KEY idx_order_items_product (product_id),
+    CONSTRAINT fk_order_items_order
+        FOREIGN KEY (order_id) REFERENCES orders (id)
+        ON DELETE CASCADE ON UPDATE CASCADE,
+    CONSTRAINT fk_order_items_product
+        FOREIGN KEY (product_id) REFERENCES products (id)
+        ON DELETE SET NULL ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
 INSERT INTO categories (id, name)
 VALUES
     (1, 'Trikots'),
