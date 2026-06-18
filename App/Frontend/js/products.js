@@ -26,7 +26,7 @@ function buildProductCard(product) {
     const col = document.createElement('div');
     col.className = 'col-sm-6 col-lg-4';
 
-    const image = product.image || '../res/img/product-placeholder.svg';
+    const image = resolveProductImage(product.image);
     col.innerHTML =
         '<div class="card h-100 shadow-sm">' +
         '  <img class="card-img-top product-image" src="' + image + '" alt="' + product.name + '">' +

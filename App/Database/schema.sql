@@ -79,12 +79,12 @@ ON DUPLICATE KEY UPDATE name = VALUES(name);
 
 INSERT INTO products (id, name, image, price, category_id, description)
 VALUES
-    (1, 'KickDistrict Home Jersey', '../res/img/product-placeholder.svg', 79.90, 1, 'Klassisches Heimtrikot mit atmungsaktivem Stoff.'),
-    (2, 'KickDistrict Away Jersey', '../res/img/product-placeholder.svg', 84.90, 1, 'Leichtes Auswärtstrikot für Training und Spieltag.'),
-    (3, 'Sprint Speed Cleats', '../res/img/product-placeholder.svg', 119.00, 2, 'Stabile Fußballschuhe mit gutem Grip.'),
-    (4, 'Control Pro Cleats', '../res/img/product-placeholder.svg', 139.00, 2, 'Fokus auf Ballgefühl und Präzision.'),
-    (5, 'Match Ball', '../res/img/product-placeholder.svg', 29.90, 3, 'Strapazierfähiger Ball für Training.'),
-    (6, 'Goalkeeper Gloves', '../res/img/product-placeholder.svg', 39.90, 3, 'Handschuhe mit sicherem Halt bei jedem Wetter.')
+    (1, 'KickDistrict Home Jersey', '../res/img/KickDistrict Home Jersey.jpeg', 79.90, 1, 'Klassisches Heimtrikot mit atmungsaktivem Stoff.'),
+    (2, 'KickDistrict Away Jersey', '../res/img/KickDistrict Away Jersey.jpeg', 84.90, 1, 'Leichtes Auswärtstrikot für Training und Spieltag.'),
+    (3, 'Sprint Speed Cleats', '../res/img/Sprint Speed Cleats.jpeg', 119.00, 2, 'Stabile Fußballschuhe mit gutem Grip.'),
+    (4, 'Control Pro Cleats', '../res/img/Control Pro Cleats.jpeg', 139.00, 2, 'Fokus auf Ballgefühl und Präzision.'),
+    (5, 'Match Ball', '../res/img/Match Ball.jpeg', 29.90, 3, 'Strapazierfähiger Ball für Training.'),
+    (6, 'Goalkeeper Gloves', '../res/img/Goalkeeper Gloves.jpeg', 39.90, 3, 'Handschuhe mit sicherem Halt bei jedem Wetter.')
 ON DUPLICATE KEY UPDATE
     name = VALUES(name),
     image = VALUES(image),

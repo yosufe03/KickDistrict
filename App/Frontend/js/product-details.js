@@ -20,7 +20,7 @@ async function loadProductDetails() {
         }
 
         const product = payload.data;
-        const image = product.image || '../res/img/product-placeholder.svg';
+        const image = resolveProductImage(product.image);
         byId('productImage').src = image;
         byId('productImage').alt = product.name;
         byId('productName').textContent = product.name;
