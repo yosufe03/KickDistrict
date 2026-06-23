@@ -36,31 +36,61 @@ function escapeHtml(value) {
         .replaceAll("'", '&#039;');
 }
 
-function addAdminNav(isAdmin) {
+function navLink(label, href) {
+    return '<a class="nav-link" href="' + href + '">' + label + '</a>';
+}
+
+function navButton(label, id, className = 'btn btn-outline-danger btn-sm') {
+    return '<button id="' + id + '" class="' + className + '" type="button">' + label + '</button>';
+}
+
+function renderNav(items) {
     const nav = document.querySelector('.navbar-nav');
-    if (!nav || document.getElementById('adminNavLink')) {
+    if (!nav) {
         return;
     }
 
-    if (isAdmin) {
-        const wrapper = document.createElement('div');
-        wrapper.className = 'nav-item d-flex gap-2 flex-wrap';
-        wrapper.id = 'adminNavLink';
-        wrapper.innerHTML =
-            '<a class="nav-link" href="admin_products.php">Produkt hinzufügen</a>' +
-            '<a class="nav-link" href="admin_customers.php">Kunden</a>' +
-            '<a class="nav-link" href="admin_orders.php">Bestellungen</a>';
-        nav.insertBefore(wrapper, nav.firstChild);
-    }
+    nav.innerHTML = items
+        .map((item) => {
+            if (item.type === 'button') {
+                return navButton(item.label, item.id, item.className);
+            }
+
+            return navLink(item.label, item.href);
+        })
+        .join('');
 }
 
 function updateNav(isLoggedIn, isAdmin = false) {
-    const loggedInOnly = document.querySelectorAll('[data-auth="in"]');
-    const guestOnly = document.querySelectorAll('[data-auth="out"]');
+    if (isAdmin) {
+        renderNav([
+            { label: 'Home', href: 'index.php' },
+            { label: 'Produkte bearbeiten', href: 'admin_products.php' },
+            { label: 'Kunden bearbeiten', href: 'admin_customers.php' },
+            { label: 'Gutscheine verwalten', href: 'vouchers.php' },
+            { type: 'button', label: 'Logout', id: 'logoutBtn' },
+        ]);
+        return;
+    }
 
-    loggedInOnly.forEach((node) => node.classList.toggle('hidden', !isLoggedIn));
-    guestOnly.forEach((node) => node.classList.toggle('hidden', isLoggedIn));
-    addAdminNav(Boolean(isAdmin));
+    if (isLoggedIn) {
+        renderNav([
+            { label: 'Home', href: 'index.php' },
+            { label: 'Produkte', href: 'index.php' },
+            { label: 'Mein Konto', href: 'profile.php' },
+            { label: 'Warenkorb', href: 'cart.php' },
+            { type: 'button', label: 'Logout', id: 'logoutBtn' },
+        ]);
+        return;
+    }
+
+    renderNav([
+        { label: 'Home', href: 'index.php' },
+        { label: 'Produkte', href: 'index.php' },
+        { label: 'Warenkorb', href: 'cart.php' },
+        { label: 'Login', href: 'login.php' },
+        { label: 'Registrieren', href: 'register.php' },
+    ]);
 }
 
 async function fetchLoginStatus() {
@@ -90,3 +120,15 @@ async function initNav() {
 }
 
 document.addEventListener('DOMContentLoaded', initNav);
+
+document.addEventListener('click', async (event) => {
+    if (event.target?.id !== 'logoutBtn') {
+        return;
+    }
+
+    try {
+        await fetch('../../Backend/logic/logout.php');
+    } finally {
+        window.location.href = './index.php';
+    }
+});

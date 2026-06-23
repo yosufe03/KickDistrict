@@ -5,6 +5,8 @@ declare(strict_types=1);
 require_once __DIR__ . '/../config/dbaccess.php';
 require_once __DIR__ . '/../config/response.php';
 
+require_admin();
+
 $db = get_db();
 $sql = 'SELECT code, value, expiry_date FROM vouchers ORDER BY expiry_date ASC';
 $result = $db->query($sql);

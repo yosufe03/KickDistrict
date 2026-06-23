@@ -10,11 +10,7 @@
 <nav class="navbar navbar-expand-lg bg-white border-bottom">
     <div class="container">
         <a class="navbar-brand" href="index.php">KickDistrict</a>
-        <div class="navbar-nav ms-auto d-flex gap-2">
-            <a class="nav-link" href="login.php">Login</a>
-            <a class="nav-link" href="vouchers.php">Gutscheine</a>
-            <a class="nav-link" href="cart.php">Warenkorb</a>
-        </div>
+        <div class="navbar-nav ms-auto d-flex gap-2"></div>
     </div>
 </nav>
 
