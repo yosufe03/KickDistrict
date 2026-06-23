@@ -21,6 +21,13 @@ function read_json_input(): array
     return is_array($data) ? $data : [];
 }
 
+function require_post(): void
+{
+    if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+        send_json(['status' => 'error', 'message' => 'Methode nicht erlaubt'], 405);
+    }
+}
+
 function clean_string(mixed $value): string
 {
     return htmlspecialchars(trim((string) ($value ?? '')), ENT_QUOTES, 'UTF-8');
@@ -42,3 +49,16 @@ function require_login(): int
     return (int) $_SESSION['user_id'];
 }
 
+function require_admin(): int
+{
+    $userId = require_login();
+
+    if (($_SESSION['role'] ?? '') !== 'admin') {
+        send_json([
+            'status' => 'error',
+            'message' => 'Adminrechte erforderlich',
+        ], 403);
+    }
+
+    return $userId;
+}

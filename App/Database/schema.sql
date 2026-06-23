@@ -14,6 +14,15 @@ CREATE TABLE IF NOT EXISTS users (
     UNIQUE KEY uq_users_username (username)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+-- Seed logins:
+-- admin / Admin123
+-- testuser / User1234
+INSERT INTO users (salutation, first_name, last_name, email, username, password, role, active)
+VALUES
+    ('Herr', 'Admin', 'KickDistrict', 'admin@kickdistrict.local', 'admin', '$2y$12$5h9RDCNuDzoWyoRuHwuxCeF780Pq8JgfpVAstRpOcAjEy.vsTDQ8G', 'admin', 1),
+    ('Frau', 'Test', 'User', 'test@kickdistrict.local', 'testuser', '$2y$12$UcQe5IzVPtDef7k.gArZUOd98K6hGu13Cdr0KaC0XL2eDzlNSIB3e', 'user', 1)
+ON DUPLICATE KEY UPDATE role = VALUES(role), active = VALUES(active);
+
 CREATE TABLE IF NOT EXISTS vouchers (
     id INT NOT NULL AUTO_INCREMENT,
     code VARCHAR(50) NOT NULL,
@@ -21,6 +30,24 @@ CREATE TABLE IF NOT EXISTS vouchers (
     expiry_date DATE NOT NULL,
     PRIMARY KEY (id),
     UNIQUE KEY uq_voucher_code (code)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+CREATE TABLE IF NOT EXISTS voucher_usages (
+    id INT NOT NULL AUTO_INCREMENT,
+    voucher_id INT NOT NULL,
+    user_id INT NOT NULL,
+    order_id INT DEFAULT NULL,
+    used_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    PRIMARY KEY (id),
+    UNIQUE KEY uq_voucher_user (voucher_id, user_id),
+    KEY idx_voucher_usages_user (user_id),
+    KEY idx_voucher_usages_order (order_id),
+    CONSTRAINT fk_voucher_usages_voucher
+        FOREIGN KEY (voucher_id) REFERENCES vouchers (id)
+        ON DELETE CASCADE ON UPDATE CASCADE,
+    CONSTRAINT fk_voucher_usages_user
+        FOREIGN KEY (user_id) REFERENCES users (id)
+        ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 INSERT INTO vouchers (code, value, expiry_date)
@@ -75,7 +102,9 @@ CREATE TABLE IF NOT EXISTS orders (
     user_id INT NOT NULL,
     order_date TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     total_amount DECIMAL(10,2) NOT NULL,
-    status ENUM('pending', 'confirmed', 'paid', 'cancelled') NOT NULL DEFAULT 'confirmed',
+    discount_amount DECIMAL(10,2) NOT NULL DEFAULT 0.00,
+    voucher_code VARCHAR(50) DEFAULT NULL,
+    status ENUM('pending', 'confirmed', 'paid', 'shipped', 'cancelled') NOT NULL DEFAULT 'confirmed',
     PRIMARY KEY (id),
     KEY idx_orders_user (user_id),
     CONSTRAINT fk_orders_user

@@ -36,8 +36,8 @@
     </div>
 </main>
 
-<script src="../js/common.js"></script>
+<script src="../js/common.js?v=2"></script>
 <script src="../js/auth.js"></script>
-<script src="../js/product-details.js"></script>
+<script src="../js/product-details.js?v=2"></script>
 </body>
 </html>

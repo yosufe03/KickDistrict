@@ -24,5 +24,6 @@ async function loadVouchers() {
     }
 }
 
-document.addEventListener('DOMContentLoaded', loadVouchers);
-
+document.addEventListener('DOMContentLoaded', () => {
+    loadVouchers();
+});

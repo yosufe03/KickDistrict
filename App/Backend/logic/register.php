@@ -5,9 +5,8 @@ declare(strict_types=1);
 require_once __DIR__ . '/../config/dbaccess.php';
 require_once __DIR__ . '/../config/response.php';
 
-if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-    send_json(['status' => 'error', 'message' => 'Methode nicht erlaubt'], 405);
-}
+require_post();
+
 
 $data = read_json_input();
 
@@ -63,4 +62,3 @@ $insertStmt->close();
 $db->close();
 
 send_json(['status' => 'success', 'message' => 'Registrierung erfolgreich']);
-

@@ -7,9 +7,8 @@ session_start();
 require_once __DIR__ . '/../config/dbaccess.php';
 require_once __DIR__ . '/../config/response.php';
 
-if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-    send_json(['status' => 'error', 'message' => 'Methode nicht erlaubt'], 405);
-}
+require_post();
+
 
 $data = read_json_input();
 $usernameEmail = clean_string($data['username_email'] ?? '');
@@ -49,4 +48,3 @@ if ($rememberMe) {
 
 $db->close();
 send_json(['status' => 'success', 'message' => 'Login erfolgreich']);
-

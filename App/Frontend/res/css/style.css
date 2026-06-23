@@ -42,3 +42,26 @@ body {
     align-items: center;
     gap: 0.5rem;
 }
+
+.admin-panel {
+    background: #fff;
+    border-radius: 8px;
+    padding: 1.25rem;
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.08);
+}
+
+.admin-thumb {
+    width: 72px;
+    height: 56px;
+    object-fit: cover;
+    border-radius: 6px;
+    background: #f1f3f6;
+}
+
+.order-status-control {
+    min-width: 170px;
+}
+
+.admin-orders .card {
+    border-radius: 8px;
+}

@@ -7,9 +7,8 @@ require_once __DIR__ . '/../config/response.php';
 
 $userId = require_login();
 
-if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-    send_json(['status' => 'error', 'message' => 'Methode nicht erlaubt'], 405);
-}
+require_post();
+
 
 // Unterstützt FormData (Frontend) und JSON (Tests/API-Client)
 $payload = !empty($_POST) ? $_POST : read_json_input();

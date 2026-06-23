@@ -8,7 +8,7 @@ require_once __DIR__ . '/../config/response.php';
 $userId = require_login();
 $db = get_db();
 
-$stmt = $db->prepare('SELECT o.id, o.order_date, o.total_amount, o.status, oi.product_name, oi.quantity, oi.unit_price FROM orders o LEFT JOIN order_items oi ON o.id = oi.order_id WHERE o.user_id = ? ORDER BY o.order_date DESC, oi.id ASC');
+$stmt = $db->prepare('SELECT o.id, o.order_date, o.total_amount, o.discount_amount, o.voucher_code, o.status, oi.product_name, oi.quantity, oi.unit_price FROM orders o LEFT JOIN order_items oi ON o.id = oi.order_id WHERE o.user_id = ? ORDER BY o.order_date DESC, oi.id ASC');
 if (!$stmt) {
     $db->close();
     send_json(['status' => 'error', 'message' => 'Bestellhistorie konnte nicht geladen werden'], 500);
@@ -25,6 +25,8 @@ while ($row = $result->fetch_assoc()) {
             'id' => $orderId,
             'order_date' => $row['order_date'],
             'total_amount' => (float) $row['total_amount'],
+            'discount_amount' => (float) $row['discount_amount'],
+            'voucher_code' => $row['voucher_code'],
             'status' => $row['status'],
             'items' => [],
         ];
@@ -43,4 +45,3 @@ $stmt->close();
 $db->close();
 
 send_json(['status' => 'success', 'data' => array_values($orders)]);
-

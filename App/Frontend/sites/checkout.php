@@ -43,6 +43,14 @@
                         </table>
                     </div>
                     <div class="d-flex justify-content-between">
+                        <span>Zwischensumme</span>
+                        <strong id="checkoutSubtotal">0.00 EUR</strong>
+                    </div>
+                    <div class="d-flex justify-content-between text-success hidden" id="checkoutDiscountRow">
+                        <span>Gutschein</span>
+                        <strong id="checkoutDiscount">-0.00 EUR</strong>
+                    </div>
+                    <div class="d-flex justify-content-between border-top pt-2 mt-2">
                         <strong>Gesamt</strong>
                         <strong id="checkoutTotal">0.00 EUR</strong>
                     </div>
@@ -61,6 +69,14 @@
                             <option value="invoice">Rechnung</option>
                         </select>
                     </div>
+                    <div class="mb-3">
+                        <label class="form-label" for="voucherCodeInput">Gutscheincode</label>
+                        <div class="input-group">
+                            <input class="form-control" id="voucherCodeInput" type="text" placeholder="Code eingeben">
+                            <button class="btn btn-outline-secondary" id="applyVoucherBtn" type="button">Anwenden</button>
+                        </div>
+                        <div id="voucherCheckoutMessage" class="hidden"></div>
+                    </div>
                     <button id="placeOrderBtn" class="btn btn-primary w-100" type="button">Zahlungspflichtig bestellen</button>
                     <div id="checkoutMessage" class="hidden"></div>
                     <div id="checkoutActions" class="hidden mt-3"></div>
@@ -75,4 +91,3 @@
 <script src="../js/checkout.js"></script>
 </body>
 </html>
-
