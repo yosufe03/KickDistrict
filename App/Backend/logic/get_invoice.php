@@ -14,7 +14,7 @@ if ($orderId <= 0) {
 
 $db = get_db();
 
-$orderStmt = $db->prepare('SELECT o.id, o.order_date, o.total_amount, o.status, u.first_name, u.last_name, u.email FROM orders o JOIN users u ON o.user_id = u.id WHERE o.id = ? AND o.user_id = ? LIMIT 1');
+$orderStmt = $db->prepare('SELECT o.id, o.order_date, o.total_amount, o.discount_amount, o.voucher_code, o.status, u.first_name, u.last_name, u.email FROM orders o JOIN users u ON o.user_id = u.id WHERE o.id = ? AND o.user_id = ? LIMIT 1');
 if (!$orderStmt) {
     $db->close();
     send_json(['status' => 'error', 'message' => 'Rechnung konnte nicht geladen werden'], 500);
@@ -59,6 +59,8 @@ send_json([
             'id' => (int) $order['id'],
             'order_date' => $order['order_date'],
             'total_amount' => (float) $order['total_amount'],
+            'discount_amount' => (float) $order['discount_amount'],
+            'voucher_code' => $order['voucher_code'],
             'status' => $order['status'],
         ],
         'customer' => [
@@ -68,4 +70,3 @@ send_json([
         'items' => $items,
     ],
 ]);
-

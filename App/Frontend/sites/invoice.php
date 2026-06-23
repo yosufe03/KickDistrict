@@ -70,7 +70,15 @@
             </div>
 
             <div class="d-flex justify-content-end">
-                <strong>Gesamt: <span id="invoiceTotal">0.00 EUR</span></strong>
+                <div class="text-end">
+                    <div>
+                        Zwischensumme: <span id="invoiceSubtotal">0.00 EUR</span>
+                    </div>
+                    <div class="text-success hidden" id="invoiceVoucherRow">
+                        Gutschein <span id="invoiceVoucherCode"></span>: -<span id="invoiceDiscount">0.00 EUR</span>
+                    </div>
+                    <strong>Gesamt: <span id="invoiceTotal">0.00 EUR</span></strong>
+                </div>
             </div>
         </div>
     </div>
@@ -81,4 +89,3 @@
 <script src="../js/invoice.js"></script>
 </body>
 </html>
-

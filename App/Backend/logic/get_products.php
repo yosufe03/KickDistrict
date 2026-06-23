@@ -9,7 +9,7 @@ $search = clean_string($_GET['q'] ?? '');
 $categoryId = isset($_GET['category_id']) ? (int) $_GET['category_id'] : 0;
 
 $db = get_db();
-$query = 'SELECT id, name, image, price, category_id FROM products';
+$query = 'SELECT id, name, image, price, category_id, description FROM products';
 $conditions = [];
 $params = [];
 $types = '';
@@ -50,4 +50,3 @@ $stmt->close();
 $db->close();
 
 send_json(['status' => 'success', 'data' => $products]);
-

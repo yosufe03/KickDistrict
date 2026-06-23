@@ -7,9 +7,7 @@ session_start();
 require_once __DIR__ . '/../config/dbaccess.php';
 require_once __DIR__ . '/../config/response.php';
 
-if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-    send_json(['status' => 'error', 'message' => 'Methode nicht erlaubt'], 405);
-}
+require_post();
 
 $payload = read_json_input();
 $productId = (int) ($payload['product_id'] ?? 0);
@@ -41,4 +39,3 @@ if (!$ok) {
 }
 
 send_json(['status' => 'success', 'message' => 'Menge aktualisiert']);
-

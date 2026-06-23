@@ -27,12 +27,40 @@ function setMessage(id, text, isError = false) {
     }
 }
 
-function updateNav(isLoggedIn) {
+function escapeHtml(value) {
+    return String(value ?? '')
+        .replaceAll('&', '&amp;')
+        .replaceAll('<', '&lt;')
+        .replaceAll('>', '&gt;')
+        .replaceAll('"', '&quot;')
+        .replaceAll("'", '&#039;');
+}
+
+function addAdminNav(isAdmin) {
+    const nav = document.querySelector('.navbar-nav');
+    if (!nav || document.getElementById('adminNavLink')) {
+        return;
+    }
+
+    if (isAdmin) {
+        const wrapper = document.createElement('div');
+        wrapper.className = 'nav-item d-flex gap-2 flex-wrap';
+        wrapper.id = 'adminNavLink';
+        wrapper.innerHTML =
+            '<a class="nav-link" href="admin_products.php">Produkt hinzufügen</a>' +
+            '<a class="nav-link" href="admin_customers.php">Kunden</a>' +
+            '<a class="nav-link" href="admin_orders.php">Bestellungen</a>';
+        nav.insertBefore(wrapper, nav.firstChild);
+    }
+}
+
+function updateNav(isLoggedIn, isAdmin = false) {
     const loggedInOnly = document.querySelectorAll('[data-auth="in"]');
     const guestOnly = document.querySelectorAll('[data-auth="out"]');
 
     loggedInOnly.forEach((node) => node.classList.toggle('hidden', !isLoggedIn));
     guestOnly.forEach((node) => node.classList.toggle('hidden', isLoggedIn));
+    addAdminNav(Boolean(isAdmin));
 }
 
 async function fetchLoginStatus() {
@@ -43,10 +71,19 @@ async function fetchLoginStatus() {
     return response.json();
 }
 
+async function ensureAdmin() {
+    const status = await fetchLoginStatus();
+    if (!status.loggedin || !status.admin) {
+        window.location.href = './login.php';
+        return false;
+    }
+    return true;
+}
+
 async function initNav() {
     try {
         const status = await fetchLoginStatus();
-        updateNav(Boolean(status.loggedin));
+        updateNav(Boolean(status.loggedin), Boolean(status.admin));
     } catch (_err) {
         updateNav(false);
     }

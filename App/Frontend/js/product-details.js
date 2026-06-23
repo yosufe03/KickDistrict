@@ -20,8 +20,7 @@ async function loadProductDetails() {
         }
 
         const product = payload.data;
-        const image = resolveProductImage(product.image);
-        byId('productImage').src = image;
+        byId('productImage').src = resolveProductImage(product.image);
         byId('productImage').alt = product.name;
         byId('productName').textContent = product.name;
         byId('productPrice').textContent = formatPrice(product.price);
