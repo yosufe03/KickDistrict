@@ -1,0 +1,5 @@
+# Keep DDEV and shell scripts executable by Linux/WSL shells.
+.ddev/commands/** text eol=lf
+.ddev/scripts/** text eol=lf
+.ddev/share-providers/*.sh text eol=lf
+*.sh text eol=lf
