@@ -25,5 +25,9 @@ async function loadVouchers() {
 }
 
 document.addEventListener('DOMContentLoaded', () => {
-    loadVouchers();
+    ensureAdmin().then((isAdmin) => {
+        if (isAdmin) {
+            loadVouchers();
+        }
+    });
 });

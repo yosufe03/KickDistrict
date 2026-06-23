@@ -17,14 +17,7 @@
 <nav class="navbar navbar-expand-lg bg-white border-bottom no-print">
     <div class="container">
         <a class="navbar-brand" href="index.php">KickDistrict</a>
-        <div class="navbar-nav ms-auto d-flex gap-2">
-            <a class="nav-link" data-auth="out" href="register.php">Registrieren</a>
-            <a class="nav-link" data-auth="out" href="login.php">Login</a>
-            <a class="nav-link hidden" data-auth="in" href="profile.php">Profil</a>
-            <a class="nav-link" href="vouchers.php">Gutscheine</a>
-            <a class="nav-link" href="cart.php">Warenkorb</a>
-            <button id="logoutBtn" data-auth="in" class="btn btn-outline-danger btn-sm hidden" type="button">Logout</button>
-        </div>
+        <div class="navbar-nav ms-auto d-flex gap-2"></div>
     </div>
 </nav>
 

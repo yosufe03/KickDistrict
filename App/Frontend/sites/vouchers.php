@@ -1,3 +1,12 @@
+<?php
+session_start();
+
+if (($_SESSION['role'] ?? '') !== 'admin') {
+    $target = isset($_SESSION['user_id']) ? 'index.php' : 'login.php';
+    header('Location: ' . $target, true, 302);
+    exit;
+}
+?>
 <!DOCTYPE html>
 <html lang="de">
 <head>
@@ -10,13 +19,7 @@
 <nav class="navbar navbar-expand-lg bg-white border-bottom">
     <div class="container">
         <a class="navbar-brand" href="index.php">KickDistrict</a>
-        <div class="navbar-nav ms-auto d-flex gap-2">
-            <a class="nav-link" href="register.php" data-auth="out">Registrieren</a>
-            <a class="nav-link" href="login.php" data-auth="out">Login</a>
-            <a class="nav-link hidden" href="profile.php" data-auth="in">Profil</a>
-            <a class="nav-link" href="cart.php">Warenkorb</a>
-            <button id="logoutBtn" data-auth="in" class="btn btn-outline-danger btn-sm hidden" type="button">Logout</button>
-        </div>
+        <div class="navbar-nav ms-auto d-flex gap-2"></div>
     </div>
 </nav>
 
